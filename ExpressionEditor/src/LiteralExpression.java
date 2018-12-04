@@ -1,14 +1,15 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LiteralExpression implements Expression {
     //Variables
-    private ArrayList<Expression> _subexpression;
+    private ArrayList<Expression> _subexpressions;
     private String _str;
     private CompoundExpression _parent;
     private int _numSubExpr;
 
     //Constructors
-    public LiteralExpression(String str) {
+    public LiteralExpression(String str, ArrayList<LiteralExpression>) {
         _str = str;
         _numSubExpr = 0;
     }
@@ -41,4 +42,6 @@ public class LiteralExpression implements Expression {
     public String convertToString(int indentLevel) {
         return null;
     }
+
 }
+

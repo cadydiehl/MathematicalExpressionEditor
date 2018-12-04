@@ -12,7 +12,7 @@ interface Expression {
 	 * Sets the parent be the specified expression.
 	 * @param parent the CompoundExpression that should be the parent of the target object
 	 */
-	void setParent (CompoundExpression parent);
+	void setParent (CompoundExpression parent); // TODO: 04/12/2018 I think this method should also modify the children of the parent 
 
 	/**
 	 * Creates and returns a deep copy of the expression.

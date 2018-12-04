@@ -45,29 +45,26 @@ public class SimpleExpressionParser implements ExpressionParser {
 	 * @param str
 	 * @return
 	 */
-	protected Expression parseExpression (String str) {
+	protected Expression parseExpression (String str) throws ExpressionParseException {
 		Expression expression;
 		
 		// TODO implement me
-
+		// TODO: 04/12/2018 I am not sure how to declare the parents/children here! Is E an additive node or is A a children of E 
 		AdditiveExpressionParser ap = new AdditiveExpressionParser();
-		expression = ap.parse(str, null);
-		if (expression != null) { //E -> A
+		AdditiveExpression ae = (AdditiveExpression) ap.parse(str, false);
+		if (ae != null) { //E -> A
+			expression = new SimpleCompoundExpression();
+			ae.setParent((CompoundExpression) expression); //todo not sure if it is safe to do this casting
 			return expression;
 		}
 
 		ParentheticalExpressionParser pp = new ParentheticalExpressionParser();
-		expression = pp.parse(str, null);
-		if (expression != null) { // E -> X
+		ParentheticalExpression pe = (ParentheticalExpression) pp.parse(str, false);
+		if (pe != null) { // E -> X
+			expression = new SimpleCompoundExpression();
+			pe.setParent((CompoundExpression) expression); //todo not sure if it is safe to do this casting
 			return expression;
 		}
-
-
-
-		/*for (int i = 1; i < str.length() - 1; i++) {
-			if (str.charAt(i) == '+' && parseExpression(str.substring(0, i)) *//* before + *//* &&
-					parseExpression(str.substring(i+1))) *//* after + *//* )
-		} */
 		return null;
 	}
 }
