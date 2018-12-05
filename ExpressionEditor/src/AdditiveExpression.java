@@ -1,14 +1,12 @@
-import java.util.ArrayList;
+import java.util.List;
 
 //Production Rules
 //Terminals = [0-9], [a-z]
 
 public class AdditiveExpression extends SimpleCompoundExpression {//implements CompoundExpression {
     //Variables
-    final String EXPR = "+";
-    final String FIELD = "AdditiveExpression";
     private CompoundExpression _parent;
-    private ArrayList<Expression> _subexpression;
+    protected List<Expression> _subexpression; //or is it an ArrayList
     private int _numSubExpr;
 
     //Constructors
@@ -32,39 +30,60 @@ public class AdditiveExpression extends SimpleCompoundExpression {//implements C
     @Override
     public void setParent(CompoundExpression parent) {
         _parent = parent;
+
+        //not sure if this is needed
+        for(Expression subexpr : _subexpression) {
+            _parent.addSubexpression(subexpr);
+        }
     }
 
     @Override
     public Expression deepCopy() {
+        final AdditiveExpression copy = new AdditiveExpression();
+        //List<Expression> copyChildren = new ArrayList<>();
 
-        return this;
+        for(Expression subexpr : _subexpression) {
+            copy._subexpression.add(subexpr.deepCopy());
+        }
+
+        /*
+        for(int i = 0; i < _subexpression.size(); i++) {
+            copy._subexpression.add(_subexpression.get(i).deepCopy()); //not sure if I need .deepCopy()
+        }
+        */
+
+        return copy;
     }
 
     @Override
     public void flatten() {
-        for(int i = 0; i < _subexpression.size(); i++) {
-            if(_subexpression.get(i) == _parent) {
-                addSubexpression(_subexpression.get(i));
+        //use instanceof ??
+        if(getParent() != null && getParent() instanceof AdditiveExpression) { //.getClass() == getClass()) {
+            for(Expression subexpr : _subexpression) {
+                getParent().addSubexpression(subexpr);
             }
+
+            //remove this from parent subexpression
+            setParent(null); //is this right??
+            ((AdditiveExpression)getParent()).removeSubexpression(this);
         }
     }
 
     @Override
     public String convertToString(int indentLevel) {
-        //use indent!!
-        //Expression.indent(sb, indentLevel);
-        //String str = "";
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
 
-        if(_subexpression == null) {
+        //sb.append(this.indent(sb, indentLevel));
 
-        }
-        else {
-            for(int i = 0; i < _subexpression.size(); i++) {
-                sb.append(convertToString(indentLevel++));
-            }
+        for(Expression subexpr : _subexpression) {
+            sb.append(subexpr.convertToString(indentLevel++));
         }
 
-        return null;
+        return sb.toString();
+    }
+
+    public void removeSubexpression(AdditiveExpression subexpr) {
+        _subexpression.remove(subexpr);
     }
 }
+
