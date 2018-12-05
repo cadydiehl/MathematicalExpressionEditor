@@ -49,7 +49,7 @@ public class SimpleExpressionParser implements ExpressionParser {
 		Expression expression;
 		
 		// TODO implement me
-		// TODO: 04/12/2018 I am not sure how to declare the parents/children here! Is E an additive node or is A a children of E 
+		// E is a SimpleCompoundExpression
 		AdditiveExpressionParser ap = new AdditiveExpressionParser();
 		AdditiveExpression ae = (AdditiveExpression) ap.parse(str, false);
 		if (ae != null) { //E -> A
