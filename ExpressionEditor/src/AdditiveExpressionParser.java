@@ -17,8 +17,8 @@ public class AdditiveExpressionParser implements ExpressionParser {
                 if (ae != null && me != null) {
                     // We set the parent of A, * and M to be expression.
                     ae.setParent(expression);
-                    LiteralExpression m = new LiteralExpression("*");
-                    m.setParent(expression);
+                    //LiteralExpression m = new LiteralExpression("*");
+                    //m.setParent(expression);
                     me.setParent(expression);
 
                     // We create a arraylist of the children/subexpressions of the additiveExpression.

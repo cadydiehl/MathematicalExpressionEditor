@@ -3,13 +3,12 @@ import java.util.ArrayList;
 
 public class LiteralExpression implements Expression {
     //Variables
-    private ArrayList<Expression> _subexpressions;
     private String _str;
     private CompoundExpression _parent;
     private int _numSubExpr;
 
     //Constructors
-    public LiteralExpression(String str, ArrayList<LiteralExpression>) {
+    public LiteralExpression(String str) {
         _str = str;
         _numSubExpr = 0;
     }
